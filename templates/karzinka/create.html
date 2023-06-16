@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post" , enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row p-3 ">
+            <div class="col-md-3">
+                <label for="id_name" class="form-label">Name: </label>
+                {{ form.name }}
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="col-md-3">
+                <label for="id_image" class="form-label">Image: </label>
+                {{ form.image }}
+            </div>
+        </div>
+        <div class="row p-3">
+            <div class="col-md-3">
+                <label for="id_information" class="form-label">Information: </label>
+                {{ form.information }}
+            </div>
+        </div>
+        <button type="submit" , class="btn btn-primary"> Save</button>
+    </form>
+{% endblock %}

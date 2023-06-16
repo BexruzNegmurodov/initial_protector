@@ -1,0 +1,35 @@
+<nav aria-label="...">
+    <ul class="pagination col-4">
+        {% if obj.has_previous %}
+            <span class="page-item">
+                <a class="page-link" href="?page={{ obj.previous_page_number }}">Previous</a>
+                <a href="?page=1" class="page-link">&laquo; first</a>
+            </span>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link">Previous</a>
+            </li>
+        {% endif %}
+
+        {% for i in obj.paginator.page_range %}
+            {% if i == obj.number %}
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+            {% else %}
+                <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+
+        {% endfor %}
+        {% if obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ obj.next_page_number }}">Next</a>
+                <a href="?page={{ obj.paginator.num_pages }}" class="page-link">last &raquo;</a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <a class="page-link">Next</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    {#    <div class="rowrow justify-content-end border">#}
+    {#        <div class="align-content-lg-end col-4 border">#}
+    {#            <form method="get">#}
+    {#                <input type="search" name="q" class="form-control mb-3 ">#}
+    {#                <button type="submit" class="btn btn-primary">Search</button>#}
+    {##}
+    {#            </form>#}
+    {#        </div>#}
+
+    <form method="get">
+        <div class="row justify-content-end p-3">
+            <div class="col-2">
+                <input type="search" name="q" class="form-control mb-3 ">
+            </div>
+            <div class="col-1 ">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-lg-2 ">
+            <div class="container">
+                <div class="row">
+                    <h1>Category</h1>
+                    <hr>
+                    <li class="list-group-item">
+                        <h4>
+                            <a href="?cat=" class="text-decoration-none bek">ALL
+                                <span class="badge text-bg-secondary">{{ obj1.count }}</span>
+                            </a>
+                        </h4>
+                    </li>
+                    {% for i in category %}
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h4>
+                                    <a href="?cat={{ i.id }}" class="text-decoration-none">{{ i.title }}
+                                        <span class="badge text-bg-secondary">{{ i.category_count }}</span>
+                                    </a>
+                                </h4>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                </div>
+            </div>
+            <hr>
+            <div class="container">
+                <div class="row">
+                    <h1>Tags</h1>
+                    <hr>
+                    <li class="list-group-item">
+                        <h4>
+                            <a href="?tag=" class="text-decoration-none bek">ALL
+                                <span class="badge text-bg-secondary">{{ obj1.count }}</span>
+                            </a>
+                        </h4>
+                    </li>
+                    {% for i in tags %}
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h4>
+                                    <a href="?tag={{ i.id }}" class="text-decoration-none">{{ i.title }}
+                                        <span class="badge text-bg-secondary">{{ i.karzinka_set.count }}</span>
+                                    </a>
+                                </h4>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-10 ">
+            <div class="row">
+                {% for i in obj %}
+                    <div class="col-md-3 col-lg-3 p-3">
+                        <div class="card" style="width: 18rem;">
+                            {% if i.image %}
+                                <img src="{{ i.image.url }}" class="card-img-top" alt="...">
+                            {% else %}
+                                <img src="{% static 'image/C6ejInyWMAAc7tE.jpg' %}" alt="" style="width: 173px">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ i.name }}</h5>
+                                <code>{{ i.category }}</code>
+                                <p style="color: #0dcaf0">
+                                    {% for j in i.tags.all %}
+                                        #{{ j }}
+                                    {% endfor %}
+                                </p>
+
+                                <p class="card-text">{{ i.information | slice:'20' }}...</p>
+                                <a href="{% url 'karzinka:detail' i.slug %}" class="btn btn-primary ">Go somewhere</a>
+                                <div>
+                                    <a href="{% url 'karzinka:edit' i.id %}"
+                                       class="btn btn-outline-success mt-2  ">Edit</a>
+                                    <a href="{% url 'karzinka:delete' i.id %}"
+                                       class="btn btn-outline-danger mt-2  ">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% include 'karzinka/pagination.html' %}
+        </div>
+    </div>
+
+
+
+
+
+
+{% endblock %}

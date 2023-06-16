@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-4">
+                <h1 class="text-danger p-3">{{ obj.title }}</h1>
+                <h2 class="text-info p-3">{{ obj.description }}</h2>
+                <h3 class="text-warning">{{ obj.created_date }}</h3>
+                <h3 class="text-warning">{{ obj.modified_date }}</h3>
+            </div>
+
+            <div class="d-grid gap-2">
+                <h1 class="p-3">Ingredient
+                    {% if request.user == obj.author %}
+                        <a class="btn btn-primary col-3" href="{% url 'recipes:ing_create' obj.id %}">++ Ingredient</a>
+                    {% endif %}
+                </h1>
+            </div>
+            <hr>
+            {% for i in obj.ingredient.all %}
+                <din class="col-md-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ i.recipe }}</h5>
+                            <h6 class="card-subtitle mb-2 text-body-secondary card-text">{{ i.title }}
+                            | {{ i.quantity }} {{ i.get_unit_display }}</h6>
+                            <a href="{% url  'recipes:ing_edit' obj.id  i.id %}" class="card-link{% if request.user != obj.author %} disabled {% endif %}">edit</a>
+                            <a href="{% url 'recipes:ing_delete' obj.id i.id %}" class="card-link{% if request.user != obj.author %} disabled {% endif %}">Delete</a>
+                        </div>
+                    </div>
+                </din>
+            {% endfor %}
+
+        </div>
+        <div class="row justify-content-end p-3">
+            <div class="col-2">
+                <a href="{% url 'recipes:delete' obj.id %}"
+                   class="btn btn-outline-danger mt-2 {% if request.user != obj.author %} disabled {% endif %} ">Delete
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}

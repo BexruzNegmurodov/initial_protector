@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="container">
+            <h1>Are you sore you logout ? </h1>
+            <a href="{% url 'karzinka:home' %}" class="btn btn-outline-success p-3">NO</a>
+            <button type="submit" class="btn btn-outline-danger p-3">LOGOUT</button>
+        </div>
+    </form>
+{% endblock %}

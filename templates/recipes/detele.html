@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="container">
+            <h1>Are you sore you want to dalete this "{{ obj.title }}" folder</h1>
+            <a href="{% url 'recipes:list' %}" class="btn btn-outline-success p-3">NO</a>
+            <button type="submit" class="btn btn-outline-danger p-3">DELETE</button>
+        </div>
+    </form>
+{% endblock %}

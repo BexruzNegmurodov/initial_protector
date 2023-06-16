@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="row p-5">
+        <div class="col-md-3 col-lg-2">
+            <div class="row">
+                <div>
+
+                    <a href="{% url 'recipes:create' %}">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" type="button">++Recipes</button>
+                        </div>
+                    </a>
+
+
+                </div>
+                <h1>Tags</h1>
+                <hr>
+                <div class="p-3">
+                    <a href="?tag=" class="text-decoration-none bek btn btn-success mt-2">All
+                    </a>
+                    {% for i in tags %}
+                        <a href="?tag={{ i.title }}"  class="text-decoration-none btn btn-success mt-2">{{ i.title }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row">
+                {% for i in recipes %}
+                    <div class="col-md-4 col-lg-3">
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h4 class="card-title">{{ i.author }}</h4>
+                                <h5 class="card-title">{{ i.title }}</h5>
+                                <h6 class="card-text">{{ i.description | slice:"10" }}..</h6>
+                                <p>
+                                    {% for j in i.tags.all %}
+                                        <a href="" class="text-decoration-none">#{{ j }}</a>
+                                    {% endfor %}
+                                </p>
+
+                                <a href="{% url 'recipes:detail' i.id %}" class="btn btn-primary">Go somewhere</a>
+                                <div>
+                                    <a href="{% url 'recipes:edit' i.id %}"
+                                       class="btn btn-outline-success mt-2 {% if request.user != i.author %} disabled {% endif %}">Edit</a>
+                                    <a href="{% url 'recipes:delete' i.id %}"
+                                       class="btn btn-outline-danger mt-2 {% if request.user != i.author %} disabledф {% endif %}">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}

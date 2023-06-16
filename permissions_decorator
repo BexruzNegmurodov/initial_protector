@@ -1,0 +1,20 @@
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseForbidden
+
+
+def owner_required(models_class, owner_attr):
+    def decorator(view_func):
+        def wrapped_view(request, *args, **kwargs):
+            # Retrieve the object being accessed
+            obj = get_object_or_404(models_class, id=kwargs['object_id'])
+
+            # Check if the authenticated user is the owner of the object
+            if getattr(obj, owner_attr) != request.user:
+                return HttpResponseForbidden("You are not the owner of this object.")
+
+            # Call the view function if the user is the owner
+            return view_func(request, *args, **kwargs)
+
+        return wrapped_view
+
+    return decorator

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h1 class="text-danger">{{ obj.name }}</h1>
+            {% if obj.image %}
+                <img src="{{ obj.image.url }}" alt="" style="width: 250px">
+            {% endif %}
+            <h2 class="text-info">{{ obj.information }}</h2>
+            <h3 class="text-warning">{{ obj.created_date }}</h3>
+        </div>
+    </div>
+
+{% endblock %}
